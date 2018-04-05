@@ -1,4 +1,4 @@
-# Joomlatools Composer Installer
+# Joomlatools Composer Installer - Greenleaf Media Version
 
 This Composer plugin will install extensions into your Joomla setup.
 
