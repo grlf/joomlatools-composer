@@ -33,11 +33,21 @@ class ComposerInstaller extends LibraryInstaller
 
         $platformStr = Util::isJoomlatoolsPlatform() ? 'Joomlatools Platform' : 'Joomla';
 
-        if ($this->io->isVerbose()) {
-            $this->io->write(sprintf("  - Queuing <comment>%s</comment> for installation in %s", $package->getName(), $platformStr), true);
-        }
+        //Check if this package was already installed into Joomla before composer
+        if ($this->isInstalled($repo, $package)) {
+	        if ($this->io->isVerbose()) {
+		        $this->io->write(sprintf("  - Queuing <comment>%s</comment> for upgrading in %s", $package->getName(), $platformStr), true);
+	        }
+	        
+	        TaskQueue::getInstance()->enqueue(array('update', $package, $this->getInstallPath($package)));
 
-        TaskQueue::getInstance()->enqueue(array('install', $package, $this->getInstallPath($package)));
+        } else {
+	        if ($this->io->isVerbose()) {
+		        $this->io->write(sprintf("  - Queuing <comment>%s</comment> for installation in %s", $package->getName(), $platformStr), true);
+	        }
+
+	        TaskQueue::getInstance()->enqueue(array('install', $package, $this->getInstallPath($package)));
+        }
     }
 
     /**
