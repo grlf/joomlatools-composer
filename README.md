@@ -83,6 +83,18 @@ If the package is for a Joomlatools Framework reusable component, provide the fo
 }
 ```
 
+The plugin will try to automatically determine whether the Joomla component needs to be upgraded or installed.  In the 
+event that doesn't work right, you can force Joomla! to run it as an "update" by specifying so in the extra field within
+`composer.json`.
+
+```json
+"extra": {
+    "force-update": [
+        "vendor/package"
+    ]
+}
+```
+
 You can now publish your extension on [Packagist](https://packagist.org/) or serve it yourself using your own [Satis repository](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md).
 
 For more information on rolling your own package, please refer to the [Composer documentation](http://getcomposer.org/doc/02-libraries.md).

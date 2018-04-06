@@ -214,4 +214,35 @@ class Util
 
         return $element;
     }
+
+	/**
+	 * Check if the repository reference is forcing Joomla to update the component
+	 *
+	 * @return bool
+	 */
+	public static function isForcingUpdate($package)
+	{
+		$manifest = realpath('./composer.json');
+
+		if (file_exists($manifest))
+		{
+			$contents = file_get_contents($manifest);
+			$composer  = json_decode($contents);
+
+			//See if any force-update array set on main composer.json file
+			if (
+				!property_exists($composer, 'extra') ||
+				!property_exists($composer->extra, 'force-update')
+			)  {
+				return false;
+			}
+
+			if (
+			in_array($package->getName(), $composer->extra->{'force-update'})) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
