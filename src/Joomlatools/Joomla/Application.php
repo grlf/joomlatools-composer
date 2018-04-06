@@ -521,6 +521,14 @@ class Application extends JApplicationCli
             $session->close();
         }
     }
+
+    /**
+     * Some installers are looking for a menu item.  We don't have one because we're
+     * doing this through cli.
+     */
+	public function getMenu($name = null, $options = array()) {
+    	return null;
+	}
 }
 
 /**
