@@ -318,11 +318,21 @@ class ExtensionInstaller
             }
             elseif ($type == 'package')
             {
+            	$uninstalled_plugins = false;
                 foreach($manifest->files->children() as $file)
                 {
                     if ((string) $file->attributes()->type == 'plugin') {
-                        $this->_enablePlugin($package, $installPath, (string) $file);
+                    	/**
+	                     * The plugins from packages don't activate correctly because they're zipped.
+	                     * We're just going to spit out a warning that they need to be enabled.
+	                     */
+                    	$uninstalled_plugins = true;
+                        //$this->_enablePlugin($package, $installPath, (string) $file);
                     }
+                }
+
+                if ($uninstalled_plugins) {
+	                $this->_io->write("  - <info>There were plugins installed via package that were not enabled. Please enable manually.</info>");
                 }
             }
         }
