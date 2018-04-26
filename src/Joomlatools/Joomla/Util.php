@@ -9,6 +9,8 @@
 
 namespace Joomlatools\Joomla;
 
+use Composer\Factory;
+
 /**
  * Joomla utility class
  *
@@ -222,7 +224,7 @@ class Util
 	 */
 	public static function isForcingUpdate($package)
 	{
-		$manifest = realpath('./composer.json');
+		$manifest = realpath(Factory::getComposerFile());
 
 		if (file_exists($manifest))
 		{
