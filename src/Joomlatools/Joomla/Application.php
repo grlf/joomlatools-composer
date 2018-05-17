@@ -303,6 +303,19 @@ class Application extends JApplicationCli
         return $this->getName() === $identifier;
     }
 
+    /***
+     * The language installed seems to look for the client ID.  If it's set to 2, it will
+     * know it's installing.
+     * 
+     * @return int
+     *
+     * @since 3.7.0
+     */
+    public function getClientId()
+    {
+        return 2;
+    }
+
     /**
      * Method to load a PHP configuration class file based on convention and return the instantiated data object.  You
      * will extend this method in child classes to provide configuration data from whatever data source is relevant
