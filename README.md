@@ -95,6 +95,20 @@ event that doesn't work right, you can force Joomla! to run it as an "update" by
 }
 ```
 
+Additionally, there may be some issues installing a component contained within a package.  If the files of the component
+to be installed already exist in the Joomla! folder structure, the installer will try to run the upgrade script rather 
+than install.  This in particular can cause troubles when first installing the component because you may wind up missing
+some install SQL.  To force the component to run the install script if the component is not in the `extensions` table
+add the following to the `composer.json` for the PACKAGE.
+
+```json
+{
+	"extra": {
+    	"clear-component": "component-name"
+	}
+}
+```
+
 You can now publish your extension on [Packagist](https://packagist.org/) or serve it yourself using your own [Satis repository](http://getcomposer.org/doc/articles/handling-private-packages-with-satis.md).
 
 For more information on rolling your own package, please refer to the [Composer documentation](http://getcomposer.org/doc/02-libraries.md).

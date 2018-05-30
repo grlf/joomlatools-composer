@@ -70,7 +70,26 @@ class ExtensionInstaller
 
         $this->_io->write(sprintf("Installing the %s extension <info>%s</info> <comment>%s</comment>", Util::getPlatformName(), $package->getName(), $package->getFullPrettyVersion()));
 
-        if(!Bootstrapper::getInstance()->getApplication()->install($installPath))
+        $app = Bootstrapper::getInstance()->getApplication();
+
+        if ($app->packageWithComponent($installPath)) {
+            $extra = $package->getExtra();
+
+            if (isset($extra['clear-component'])) {
+                if ($extra['clear-component'] != "false")
+                {
+                    \jimport('joomla.filesystem.folder');
+                    \jimport('joomla.filesystem.file');
+
+                    \JFolder::delete('administrator/components/'. $extra['clear-component']);
+                    \JFolder::delete('components/'. $extra['clear-component']);
+                }
+            }else {
+                $this->_io->write("<error>Warning: This package contains components not defined in the composer.json file.  This can cause SQL to not run properly on first install.  Please see README.md.</error>");
+            }
+        }
+        
+        if(!$app->install($installPath))
         {
             // Get all error messages that were stored in the message queue
             $descriptions = $this->_getApplicationMessages();

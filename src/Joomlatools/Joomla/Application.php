@@ -156,6 +156,33 @@ class Application extends JApplicationCli
     }
 
     /**
+     * This method determines if the manifest at the given path contains a component within a package.
+     * Package components need to have extra care because they can have problems installing if the files are already
+     * in the joomla system.
+     *
+     * @param $path - Path to unzipped package
+     *
+     * @return bool
+     */
+    public function packageWithComponent($path){
+        $installer = $this->getInstaller();
+
+        //Set sourcepath and get manifest
+        $installer->setPath('source', $path);
+        $manifest = $installer->getManifest();
+
+        if ((string) $manifest->attributes()->type == "package") {
+            foreach ($manifest->files->file as $file) {
+                if ((string) $file->attributes()->type == "component") {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Installs an extension from the given path.
      *
      * @param string $path Path to the extracted installation package.
