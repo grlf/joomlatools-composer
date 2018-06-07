@@ -135,6 +135,11 @@ class ComposerInstaller extends LibraryInstaller
         }
 
         $installPath = $this->getInstallPath($package);
+        
+        if (file_exists($installPath . '/joomla.installed')) {
+            return true; //This package has already been installed
+        }
+
         $manifest    = Util::getPackageManifest($installPath);
 
         if ($manifest === false) {

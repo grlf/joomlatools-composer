@@ -111,6 +111,8 @@ class ExtensionInstaller
                 }
             }
         }
+
+        touch($installPath . '/joomla.installed');
     }
 
     public function update(PackageInterface $package, $installPath)
@@ -144,6 +146,8 @@ class ExtensionInstaller
                 }
             }
         }
+
+        touch($installPath . '/joomla.installed');
     }
 
     /**
