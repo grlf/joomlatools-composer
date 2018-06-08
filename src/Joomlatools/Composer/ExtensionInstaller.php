@@ -85,7 +85,7 @@ class ExtensionInstaller
                     \JFolder::delete('components/'. $extra['clear-component']);
                 }
             }else {
-                $this->_io->write("<error>Warning: This package contains components not defined in the composer.json file.  This can cause SQL to not run properly on first install.  Please see README.md.</error>");
+                $this->_io->write("<error>Warning: This package contains components not defined in the composer.json file.  This can cause SQL to not run properly on first install.  Please see README.md on Greenleaf's JoomlaTools Composer fork.</error>");
             }
         }
         
